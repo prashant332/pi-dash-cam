@@ -1,0 +1,28 @@
+.button-container {
+    margin-top: 8rem;
+}
+.align-right{
+    float: right;
+}
+.align-left{
+    float: left;
+}
+.index-body{
+    background: url("bg.jpg") no-repeat;
+    background-size: cover;
+}
+.content-body{
+    background: #1d2124;
+}
+.form-width {
+    width: 70%;
+}
+label{
+    color: #ffffff;
+ }
+h3{
+    color: #ffffff;
+}
+div{
+    text-align: center;
+}
