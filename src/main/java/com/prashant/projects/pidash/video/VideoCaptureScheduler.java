@@ -28,7 +28,7 @@ public class VideoCaptureScheduler {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");
         String fileName = "vid-"+dateFormat.format(date)+".h264";
         killRaspiVid();
-       // startCapture(fileName);
+        startCapture(fileName);
         videoArchiveScheduler.archiveVideo();
         videosRepo.save(new Video(fileName, "/home/pi/capture/"+fileName, date));
     }
