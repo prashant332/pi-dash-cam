@@ -35,6 +35,7 @@ public class VideoCaptureScheduler {
 
     private void startCapture(String fileName) {
         String captureCommand = "raspivid "+ videoAttributesProvider.getVideoAttributes()+" -o /home/pi/capture/"+fileName;
+        System.out.println(">>>>>>>"+captureCommand);
         executeCommand(captureCommand);
     }
 
