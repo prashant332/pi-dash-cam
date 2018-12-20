@@ -58,7 +58,7 @@ public class VideoAttributesProvider {
             return this;
         }
         public AttributesBuilder withDynamicRange(String dynamicRange){
-            attributes.append(" -drc "+dynamicRange);
+            //attributes.append(" -drc "+dynamicRange);
             return this;
         }
         public String build() {
