@@ -30,11 +30,11 @@ public class VideoCaptureScheduler {
         killRaspiVid();
        // startCapture(fileName);
         videoArchiveScheduler.archiveVideo();
-        videosRepo.save(new Video(fileName, "/Users/sg0209234/Desktop/"+fileName, date));
+        videosRepo.save(new Video(fileName, "/home/pi/capture/"+fileName, date));
     }
 
     private void startCapture(String fileName) {
-        String captureCommand = "/usr/bin/raspivid "+ videoAttributesProvider.getVideoAttributes()+" -o /Users/sg0209234/Desktop/"+fileName;
+        String captureCommand = "raspivid "+ videoAttributesProvider.getVideoAttributes()+" -o /home/pi/capture/"+fileName;
         executeCommand(captureCommand);
     }
 
