@@ -12,7 +12,7 @@ public class FileOperations {
     public void deleteFile(String filePath) {
         try {
             Files.delete(Paths.get(filePath));
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
