@@ -36,18 +36,25 @@ public class VideoCaptureScheduler {
     private void startCapture(String fileName) {
         String captureCommand = "raspivid -t 0 "+ videoAttributesProvider.getVideoAttributes()+" -o /home/pi/capture/"+fileName;
         System.out.println(">>>>>>>"+captureCommand);
-        executeCommand(captureCommand);
+        executeCommand(captureCommand, false);
     }
 
     private void killRaspiVid(){
-        executeCommand("killall raspivid");
+        executeCommand("killall raspivid", true);
     }
 
-    private void executeCommand(String command) {
+    private void executeCommand(String command, boolean wait) {
+        System.out.println(">>>>>>>>>>Executing command "+command);
         Runtime runTime = Runtime.getRuntime();
         try {
-            runTime.exec(command);
-        } catch (IOException e) {
+            Process exec = runTime.exec(command);
+            if(wait) {
+                int exitCode = exec.waitFor();
+                if(exitCode == 0 ){
+                    System.out.println("Process exited successfully");
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

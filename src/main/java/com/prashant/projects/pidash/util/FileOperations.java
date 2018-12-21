@@ -2,6 +2,7 @@ package com.prashant.projects.pidash.util;
 
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Iterator;
@@ -11,7 +12,9 @@ public class FileOperations {
 
     public void deleteFile(String filePath) {
         try {
-            Files.delete(Paths.get(filePath));
+            if(new File(filePath).exists()) {
+                Files.delete(Paths.get(filePath));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

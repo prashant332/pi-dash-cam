@@ -98,7 +98,7 @@ public class VideosController {
         Optional<Video> video = videosRepo.findById(id);
         if(video.isPresent()) {
             File videoFile = new File(video.get().getPath());
-            return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/octet-stream")).body(new FileSystemResource(videoFile));
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType("media/mp4")).body(new FileSystemResource(videoFile));
         }
         return ResponseEntity.noContent().build();
     }
