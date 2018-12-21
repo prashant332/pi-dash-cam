@@ -44,11 +44,14 @@ public class VideoCaptureScheduler {
     }
 
     private void executeCommand(String command) {
-        Runtime runTime = Runtime.getRuntime();
-        try {
-            runTime.exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Thread thread = new Thread(() -> {
+            Runtime runTime = Runtime.getRuntime();
+            try {
+                runTime.exec(command);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
 }

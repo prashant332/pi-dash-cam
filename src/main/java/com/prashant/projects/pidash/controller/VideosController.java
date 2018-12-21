@@ -5,9 +5,14 @@ import com.prashant.projects.pidash.repo.VideosRepo;
 import com.prashant.projects.pidash.util.FileOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,6 +67,29 @@ public class VideosController {
             videosRepo.delete(video1);
         }
         return "redirect:/videos/"+currentPage;
+    }
+
+    @GetMapping("/video/download/{id}")
+    @ResponseBody
+    public ResponseEntity<Resource> downloadVideo(@PathVariable("id") long id, HttpServletRequest request){
+        Optional<Video> video = videosRepo.findById(id);
+        if(video.isPresent()){
+            String path = video.get().getPath();
+            try {
+                Resource resource = new UrlResource(Paths.get(path).toUri());
+                String mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+                if(mimeType==null){
+                    mimeType = "application/octet-stream";
+                }
+                return ResponseEntity.ok().contentType(MediaType.parseMediaType(mimeType))
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponseEntity.noContent().build();
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/video/play")

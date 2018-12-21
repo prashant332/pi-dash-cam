@@ -74,6 +74,9 @@
                         <a th:href="${'/video/delete/'+ video.id + '/' + currentPage}" type="button" class="btn btn-warning">
                             Delete
                         </a>
+                        <a th:href="${'/video/download/'+ video.id}" type="button" class="btn btn-warning">
+                            Download
+                        </a>
                     </td>
                     <td>
                         <label th:text="${video.recordDate}" />
