@@ -23,6 +23,7 @@ public class VideoAttributesProvider {
                 .withStabilization(settings.getStabilization())
                 .withWhitebalance(settings.getWhitebalance())
                 .withVideoOptions(settings.getVideoOptions())
+                .withShowPreview(settings.isShowPreview())
                 .build();
     }
 
@@ -65,6 +66,12 @@ public class VideoAttributesProvider {
         public AttributesBuilder withVideoOptions(String videoOptions){
             if(videoOptions !=null && !"".equals(videoOptions.trim())){
                 attributes.append(" "+videoOptions+" ");
+            }
+            return this;
+        }
+        public AttributesBuilder withShowPreview(boolean showPreview){
+            if(showPreview){
+                attributes.append(" -n ");
             }
             return this;
         }

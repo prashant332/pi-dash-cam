@@ -30,6 +30,8 @@ public class Settings {
 
     private String videoOptions;
 
+    private boolean showPreview;
+
     public Long getId() {
         return id;
     }
@@ -112,5 +114,13 @@ public class Settings {
 
     public void setVideoOptions(String videoOptions) {
         this.videoOptions = videoOptions;
+    }
+
+    public boolean isShowPreview() {
+        return showPreview;
+    }
+
+    public void setShowPreview(boolean showPreview) {
+        this.showPreview = showPreview;
     }
 }
