@@ -94,12 +94,12 @@ public class VideosController {
 
     @GetMapping("/video/play")
     @ResponseBody
-    public FileSystemResource videoSource(@RequestParam("id") long id) {
+    public ResponseEntity<Resource> videoSource(@RequestParam("id") long id) {
         Optional<Video> video = videosRepo.findById(id);
         if(video.isPresent()) {
             File videoFile = new File(video.get().getPath());
-            return new FileSystemResource(videoFile);
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/octet-stream")).body(new FileSystemResource(videoFile));
         }
-        return null;
+        return ResponseEntity.noContent().build();
     }
 }

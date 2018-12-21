@@ -58,9 +58,9 @@
                         <label th:text="${video.id}"></label>
                     </td>
                     <td>
-                        <a th:href="@{/video/play/(id=${video.id})}" target="_blank" type="button" class="btn btn-warning">
-                            Play
-                        </a>
+                        <video width="auto" height="240" controls style=" margin-left: auto; margin-right: auto; display: block;">
+                            <source th:src="@{/video/play/(id=${video.id})}" type="video/mp4">
+                        </video>
                         <label th:text="${video.title}"></label>
                     </td>
                     <td>
