@@ -1,5 +1,7 @@
 package com.prashant.projects.pidash.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +32,7 @@ public class Settings {
 
     private String videoOptions;
 
+    @ColumnDefault(value = "false")
     private boolean showPreview;
 
     public Long getId() {
