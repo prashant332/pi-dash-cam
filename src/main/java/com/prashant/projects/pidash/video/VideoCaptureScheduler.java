@@ -22,7 +22,7 @@ public class VideoCaptureScheduler {
     @Autowired
     private VideoArchiveScheduler videoArchiveScheduler;
 
-    @Scheduled(fixedRate = 300000)
+    @Scheduled(fixedRate = 180000)
     public void captureVideo(){
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm");

@@ -22,6 +22,7 @@ public class VideoAttributesProvider {
                 .withRotation(settings.getRotation())
                 .withStabilization(settings.getStabilization())
                 .withWhitebalance(settings.getWhitebalance())
+                .withVideoOptions(settings.getVideoOptions())
                 .build();
     }
 
@@ -59,6 +60,12 @@ public class VideoAttributesProvider {
         }
         public AttributesBuilder withDynamicRange(String dynamicRange){
             //attributes.append(" -drc "+dynamicRange);
+            return this;
+        }
+        public AttributesBuilder withVideoOptions(String videoOptions){
+            if(videoOptions !=null && !"".equals(videoOptions.trim())){
+                attributes.append(" "+videoOptions+" ");
+            }
             return this;
         }
         public String build() {

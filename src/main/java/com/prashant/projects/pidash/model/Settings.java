@@ -28,6 +28,8 @@ public class Settings {
 
     private String dynamicRange;
 
+    private String videoOptions;
+
     public Long getId() {
         return id;
     }
@@ -98,5 +100,17 @@ public class Settings {
 
     public void setDynamicRange(String dynamicRange) {
         this.dynamicRange = dynamicRange;
+    }
+
+    public boolean isStabilization() {
+        return stabilization;
+    }
+
+    public String getVideoOptions() {
+        return videoOptions;
+    }
+
+    public void setVideoOptions(String videoOptions) {
+        this.videoOptions = videoOptions;
     }
 }
