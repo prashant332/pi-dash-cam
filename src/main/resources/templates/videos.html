@@ -58,9 +58,9 @@
                         <label th:text="${video.id}"></label>
                     </td>
                     <td>
-                        <video width="auto" height="240" controls style=" margin-left: auto; margin-right: auto; display: block;">
-                            <source th:src="@{/video/play/(id=${video.id})}" type="video/mp4">
-                        </video>
+                        <a th:href="${'/video/download/'+ video.id}">
+                            <img th:src="@{/video/play/(id=${video.id})}" width="auto" height="240"/>
+                        </a>
                         <label th:text="${video.title}"></label>
                     </td>
                     <td>
@@ -73,9 +73,6 @@
                     <td>
                         <a th:href="${'/video/delete/'+ video.id + '/' + currentPage}" type="button" class="btn btn-warning">
                             Delete
-                        </a>
-                        <a th:href="${'/video/download/'+ video.id}" type="button" class="btn btn-warning">
-                            Download
                         </a>
                     </td>
                     <td>

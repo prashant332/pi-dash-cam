@@ -48,7 +48,7 @@ public class SettingsController {
         settingsRepo.save(settings);
         model.addAttribute("setting", settings);
         model.addAttribute("message", "Settings Saved! Will be effective from next video");
-        return "edit-setting";
+        return "redirect:setting";
     }
 
     @GetMapping("/reset")

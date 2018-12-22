@@ -1,5 +1,7 @@
 package com.prashant.projects.pidash.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,13 +23,16 @@ public class Video {
 
     private Date recordDate;
 
+    private String thumbnailPath;
+
     public Video() {
 
     }
-    public Video(String title, String path, Date recordDate) {
+    public Video(String title, String path, Date recordDate, String thumbnailPath) {
         this.title = title;
         this.path = path;
         this.recordDate = recordDate;
+        this.thumbnailPath = thumbnailPath;
     }
 
     public Long getId() {
@@ -68,5 +73,13 @@ public class Video {
 
     public void setRecordDate(Date recordDate) {
         this.recordDate = recordDate;
+    }
+
+    public String getThumbnailPath() {
+        return thumbnailPath;
+    }
+
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
     }
 }

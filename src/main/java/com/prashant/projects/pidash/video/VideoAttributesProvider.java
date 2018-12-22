@@ -70,7 +70,7 @@ public class VideoAttributesProvider {
             return this;
         }
         public AttributesBuilder withShowPreview(boolean showPreview){
-            if(showPreview){
+            if(!showPreview){
                 attributes.append(" -n ");
             }
             return this;

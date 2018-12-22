@@ -22,9 +22,11 @@
         <div class="row">
             <div class="col-md-12">
                 <form action="#" th:action="@{/updateSetting}" th:object="${setting}" method="post">
-                    <div class="form-group">
-                        <label for="id">ID</label>
-                        <input id="id" class="form-control" type="text" th:contenteditable="false" th:field="*{id}">
+                    <input id="id" class="form-control" type="hidden" th:contenteditable="false" th:field="*{id}">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" th:field="*{pauseRecording}"/> Pause Recording after current
+                        </label>
                     </div>
                     <div class="form-group">
                         <label for="raspiOptions">Video Options</label>

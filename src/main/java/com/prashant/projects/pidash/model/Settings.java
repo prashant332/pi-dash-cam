@@ -35,6 +35,9 @@ public class Settings {
     @ColumnDefault(value = "false")
     private boolean showPreview;
 
+    @ColumnDefault(value = "false")
+    private boolean pauseRecording;
+
     public Long getId() {
         return id;
     }
@@ -125,5 +128,13 @@ public class Settings {
 
     public void setShowPreview(boolean showPreview) {
         this.showPreview = showPreview;
+    }
+
+    public boolean isPauseRecording() {
+        return pauseRecording;
+    }
+
+    public void setPauseRecording(boolean pauseRecording) {
+        this.pauseRecording = pauseRecording;
     }
 }

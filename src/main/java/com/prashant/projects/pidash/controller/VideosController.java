@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,11 +93,11 @@ public class VideosController {
 
     @GetMapping("/video/play")
     @ResponseBody
-    public ResponseEntity<Resource> videoSource(@RequestParam("id") long id) {
+    public ResponseEntity<Resource> videoThumbSource(@RequestParam("id") long id) {
         Optional<Video> video = videosRepo.findById(id);
         if(video.isPresent()) {
-            File videoFile = new File(video.get().getPath());
-            return ResponseEntity.ok().contentType(MediaType.parseMediaType("media/mp4")).body(new FileSystemResource(videoFile));
+            File videoFile = new File(video.get().getThumbnailPath());
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/jpeg")).body(new FileSystemResource(videoFile));
         }
         return ResponseEntity.noContent().build();
     }
