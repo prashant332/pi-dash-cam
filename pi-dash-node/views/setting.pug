@@ -1,0 +1,50 @@
+extends layout
+
+block content
+    div(class='container-fluid form-width')
+        div(class='row')
+            div(class='col-md-12')
+                h3 Available storage is #{availableSpace} %
+                button(class='btn btn-secondary' onclick='cleanUpSpace') Cleanup
+        div(class='row')
+            div(class='col-md-12')
+                form(action='/setting/save' method='POST')
+                    div(class='checkbox')
+                        input(type='checkbox' checked=settings.pause id='pause' name='pause')
+                        label &nbsp;Pause Recording after current
+                    div(class='form-group')
+                        label(for='options') Video Options
+                        input(class='form-control' id='options' value=settings.videoOptions name='videoOptions')
+                    div(class='form-group')
+                        label(for='quality') Quality
+                        select(class='form-control' id='quality' value=settings.quality name='quality')
+                            option(value='Auto' selected=settings.quality==="Auto") Auto
+                            option(value="1920x1080" selected=settings.quality==="1920x1080") 1920x1080
+                            option(value="1640x1232" selected=settings.quality==="1640x1232") 1640x1232
+                            option(value="1280X720" selected=settings.quality==="1280X720") 1280X720
+                            option(value="640x480" selected=settings.quality==="640x480") 640x480
+                    div(class='form-group')
+                        label(for='rotation') Rotation
+                        select(class='form-control' id='rotation' value=settings.rotation name='rotation')
+                            option(value='0' selected=settings.rotation === "0") 0
+                            option(value="90" selected=settings.rotation === "90") 90
+                            option(value="180" selected=settings.rotation === "180") 180
+                            option(value="270" selected=settings.rotation === "270") 270
+                    div(class='form-group')
+                        label(for='whitebalance') White Balance
+                        select(class='form-control' id='whitebalance' value=settings.whitebalance name='whitebalance')
+                            option(value='off' selected=settings.whitebalance === "off") off
+                            option(value="auto" selected=settings.whitebalance === "auto") auto
+                            option(value="sun" selected=settings.whitebalance === "sun") sun
+                            option(value="cloud" selected=settings.whitebalance === "cloud") cloud
+                    div(class='form-group')
+                        label(for='loop') Loop timings
+                        select(class='form-control' id='loop' value=settings.loopTime name='loopTime')
+                            option(value='2 mins' selected=settings.loopTime === "2 mins") 2 mins
+                            option(value='3 mins' selected=settings.loopTime === "3 mins") 3 mins
+                            option(value='4 mins' selected=settings.loopTime === "4 mins") 4 mins
+                            option(value='5 mins' selected=settings.loopTime === "5 mins") 5 mins
+                    div(class='checkbox')
+                        input(type='checkbox' checked=settings.stabilization id='stabilization' name='stabilization')
+                        label &nbsp;Stabilization&nbsp;
+                    button(class='btn btn-primary' type='submit') Submit

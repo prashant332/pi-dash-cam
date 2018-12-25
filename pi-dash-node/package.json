@@ -1,0 +1,27 @@
+{
+  "name": "pi-dash-node",
+  "version": "0.0.0",
+  "private": true,
+  "bin": "bin/www",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "pkg": {
+    "assets": [
+      "views/**/*",
+      "public/**/*"
+    ]
+  },
+  "dependencies": {
+    "check-disk-space": "^1.5.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "later": "^1.2.0",
+    "lodash": "^4.17.11",
+    "morgan": "~1.9.0",
+    "pug": "2.0.0-beta11",
+    "raspicam": "^0.2.14"
+  }
+}
