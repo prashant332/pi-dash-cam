@@ -14,18 +14,22 @@ block content
                             th
                                 label Keep it Safe
                             th
-                                label Delete
+                                label &nbsp;
                     tbody
-                        each video, index in videos
+                        each video in videos
                             tr
                                 td
                                     label #{video.id}
                                 td
-                                    a(href='/videos/download/'+video.id)
+                                    a(href='/videos/play/'+video.id)
                                         img(src='/videos/thumbnail/'+video.id width='auto' height='240')
                                     label #{video.title}
                                 td
-                                    div(class='checkbox')
-                                        input(type='checkbox' checked=video.dontRemove id='dontRemove' name='dontRemove')
+                                    if video.dontRemove
+                                        a(class='btn btn-secondary' href='/videos/updateRemoveFlag/'+video.id+'/false') Ok to Remove
+                                    else
+                                        a(class='btn btn-primary' href='/videos/updateRemoveFlag/'+video.id+'/true') Dont Remove
                                 td
                                     button(class='btn btn-secondary') Delete
+                                    label &nbsp;
+                                    a(href='/videos/download/'+video.id class='btn btn-primary') Download

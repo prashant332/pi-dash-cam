@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    div(class='container-fluid form-width')
+        div(class='row')
+            div(class='col-md-12 col-12')
+                video(id='videoPlayer' controls)
+                    source(src='/videos/download/'+id type='video/mp4')
+                a(href='/videos' class='btn btn-primary') Back

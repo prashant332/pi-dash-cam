@@ -3,7 +3,6 @@ const fs = require('fs');
 var router = express.Router();
 const dbOps = require('../db/dbOperations');
 const sortBy = require('lodash').sortBy;
-const { CAPTURE_DIRECTORY } = require('../constants');
 
 
 /* GET users listing. */
@@ -12,9 +11,15 @@ router.get('/', function(req, res, next) {
     res.render('videos', {videos: sortBy(videos, ['id'], ['desc'])});
 });
 
-router.get('/download/:videoId', function(req, res) {
+router.get('/play/:videoId', function (req, res) {
+    console.log(">>>>>get video for "+req.params.videoId);
+    res.render('play', {id: req.params.videoId});
+});
+
+router.get('/stream/:videoId', function(req, res) {
+    console.log(">>>>>get video for download "+req.params.videoId);
     const video = dbOps.getVideo(req.params.videoId);
-    const path = `${CAPTURE_DIRECTORY}/${video.title}`;
+    const path = video.path;
     const stat = fs.statSync(path);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -30,31 +35,56 @@ router.get('/download/:videoId', function(req, res) {
             'Content-Range': `bytes ${start}-${end}/${fileSize}`,
             'Accept-Ranges': 'bytes',
             'Content-Length': chunksize,
-            'Content-Type': 'video/mp4',
+            'Content-Type': 'video/h264',
         };
         res.writeHead(206, head);
         file.pipe(res);
     } else {
         const head = {
             'Content-Length': fileSize,
-            'Content-Type': 'video/mp4',
+            'Content-Type': 'video/h264',
         };
         res.writeHead(200, head);
         fs.createReadStream(path).pipe(res)
     }
-    res.redirect('/setting');
+});
+
+router.get('/delete/:videoId', function(req, res) {
+    const vid = dbOps.getVideo(req.params.videoId);
+    if(vid) {
+        const path = vid.path;
+        dbOps.deleteVideo(vid);
+        fs.unlinkSync(path);
+        res.redirect("/videos");
+    } else {
+        res.writeHead(404);
+        res.send("File not found");
+    }
+});
+
+router.get('/updateRemoveFlag/:videoId/:status', function(req,res){
+    const vidId = req.params.videoId;
+    const status = req.params.status;
+    if(vidId) {
+        dbOps.markDontRemove(vidId, status);
+        res.redirect("/videos");
+    } else {
+        res.writeHead(404);
+        res.send("File not found");
+    }
+});
+
+router.get('/download/:videoId', function(req, res) {
+    console.log(">>>>>get video for download "+req.params.videoId);
+    const video = dbOps.getVideo(req.params.videoId);
+    const path = video.path;
+    res.download(path);
 });
 
 router.get('/thumbnail/:videoId', function(req,res){
     const video = dbOps.getVideo(req.params.videoId);
     if(video) {
-        const path = `${CAPTURE_DIRECTORY}/${video.thumbnail}`;
-        const head = {
-            'Content-Length': fileSize,
-            'Content-Type': 'application/jpg',
-        };
-        res.writeHead(200, head);
-        fs.createReadStream(path).pipe(res);
+        res.download(video.thumbnail);
     } else {
         res.writeHead(404);
         res.send("File not found");

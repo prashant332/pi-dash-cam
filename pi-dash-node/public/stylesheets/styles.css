@@ -12,13 +12,13 @@
     background-size: cover;
 }
 .content-body{
-    background: #1d2124;
+    background: #f7f7f7;
 }
 .form-width {
     width: 70%;
 }
 label{
-    color: #ffffff;
+    color: #000000;
  }
 h3{
     color: #ffffff;

@@ -2,18 +2,18 @@ const laterObj = require('later');
 const dbOps = require('../db/dbOperations');
 const checkDiskSpace = require('check-disk-space');
 const sortBy = require('lodash').sortBy;
-var RaspiCam = require('raspicam');
 const { CAPTURE_DIRECTORY } = require('../constants');
-var snapshotCam = undefined;
-var videoCam = undefined;
-
+const spawn = require('child_process').spawn;
+let PROCESS_RUNNING = false;
+let child_process = undefined;
 let videoTimer = laterObj.parse.text(`every ${dbOps.getSettings()["loopTime"]}`);
 
 function startVideo() {
-   startCapture();
+    startCapture();
     laterObj.setInterval(function() {
-       startCapture();
-   }, videoTimer);
+        console.log("lopping the video capture - "+ new Date());
+        startCapture();
+    }, videoTimer);
 }
 
 function startCapture() {
@@ -22,21 +22,25 @@ function startCapture() {
     const videoSettings = getVideoSettings(settings);
     const vidFile = `${CAPTURE_DIRECTORY}/vid_${vidId}.h264`;
     const thumbnail = `${CAPTURE_DIRECTORY}/thumb_${vidId}.jpg`;
-    if(videoCam) {
-        videoCam.stop();
+
+    if(PROCESS_RUNNING && child_process) {
+        child_process.kill('SIGINT');
+        child_process = undefined;
+        PROCESS_RUNNING = false;
     }
-    videoCam = new RaspiCam({mode: 'video', output:vidFile});
-    snapshotCam = new RaspiCam({mode: 'photo', output: thumbnail});
-    snapshotCam.set('t', '10');
-    snapshotCam.set('n', '');
-    snapshotCam.start();
-    snapshotCam.on('exit', function() {
-        videoCam.set('t', "0");
-        videoCam.set('w', videoSettings.width);
-        videoCam.set('h', videoSettings.height);
-        videoCam.set('rot', videoSettings.rotation);
-        videoCam.set('awb', videoSettings.awb);
-        videoCam.start();
+    const raspistillCommand = `/opt/vc/bin/raspivid`;
+    console.log(">>>>>>>>>>>"+vidFile);
+    child_process = spawn('raspistill', ['-t', '10', '-n', '-w', '640', '-h', '480', '-ex', 'sports', '-o', thumbnail]);
+    child_process.on('exit', function() {
+        console.log("still exit");
+        child_process = spawn(raspistillCommand, ['-t', '0','-n', '-w', videoSettings.width, '-h', videoSettings.height, '-rot', videoSettings.rotation, '-awb', videoSettings.awb, '-o', vidFile]);
+    });
+    PROCESS_RUNNING = true;
+    child_process.stderr.on('data', function(data) {
+        console.log("process error -> "+ data);
+    });
+    child_process.stdout.on('data', function (data) {
+        console.log("process data "+ data);
     });
     dbOps.saveVideo({id: vidId, thumbnail: thumbnail, path: vidFile, title: `vid_${vidId}.h264`, dontRemove: false});
     checkDiskSpace('/').then((diskSpace) =>{

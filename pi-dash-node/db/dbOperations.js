@@ -1,6 +1,6 @@
 const fs = require('fs');
 const find = require('lodash').find;
-const merge = require('lodash').merge;
+const findIndex = require('lodash').findIndex;
 const remove = require('lodash').remove;
 const dataCache = {};
 
@@ -31,7 +31,7 @@ function getNextVideoId() {
 }
 
 function saveVideo(videoObj) {
-    merge(dataCache['videos'].videos, videoObj);
+    dataCache['videos'].videos.push(videoObj);
     saveVideos(dataCache['videos']);
 }
 
@@ -40,12 +40,18 @@ function getVideos() {
 }
 
 function markDontRemove(videoId, dontRemove) {
-    const vid = find(dataCache['videos'].videos, {id: videoId});
-    if(vid){
+    const vid = getVideo(videoId);
+    const index = findIndex(dataCache['videos'].videos, function(v){
+        return v.id === Number(videoId);
+    });
+    console.log("video at index - "+ index);
+    if(vid && index>-1){
         vid.dontRemove = dontRemove;
+        dataCache['videos'].videos.splice(index, 1, vid);
+        saveVideos(dataCache['videos']);
     }
-    saveVideo(vid);
 }
+
 function deleteVideo(videoObj){
     remove(dataCache['videos'].videos, function(vid){
         return vid.id === videoObj.id;
@@ -54,8 +60,11 @@ function deleteVideo(videoObj){
     fs.unlinkSync(videoObj.path);
     fs.unlinkSync(videoObj.thumbnail);
 }
+
 function getVideo(videoId) {
-    const video = find(dataCache['videos'].videos, {id: videoId});
+    const video = find(dataCache['videos'].videos, function(vid){
+        return vid.id === Number(videoId);
+    });
     return video;
 }
 
