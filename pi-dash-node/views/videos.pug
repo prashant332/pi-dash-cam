@@ -12,8 +12,6 @@ block content
                             th
                                 label Title
                             th
-                                label Keep it Safe
-                            th
                                 label &nbsp;
                     tbody
                         each video in videos
@@ -25,11 +23,11 @@ block content
                                         img(src='/videos/thumbnail/'+video.id width='auto' height='240')
                                     label #{video.title}
                                 td
-                                    if video.dontRemove
+                                    if video.dontRemove=='true'
                                         a(class='btn btn-secondary' href='/videos/updateRemoveFlag/'+video.id+'/false') Ok to Remove
                                     else
                                         a(class='btn btn-primary' href='/videos/updateRemoveFlag/'+video.id+'/true') Dont Remove
-                                td
-                                    button(class='btn btn-secondary') Delete
+                                    label &nbsp;
+                                    a(href='/videos/delete/'+video.id class='btn btn-secondary') Delete
                                     label &nbsp;
                                     a(href='/videos/download/'+video.id class='btn btn-primary') Download

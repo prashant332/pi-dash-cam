@@ -9,10 +9,12 @@ var usersRouter = require('./routes/users');
 var settingRouter = require('./routes/setting');
 var videoRouter = require('./routes/videos');
 var videoOperations = require('./video/videoOperations');
+var dataOperations = require('./db/redisClient');
 
 var app = express();
 
 videoOperations.init();
+dataOperations.init();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

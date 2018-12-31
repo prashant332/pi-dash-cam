@@ -21,7 +21,7 @@ block content
                             option(value='Auto' selected=settings.quality==="Auto") Auto
                             option(value="1920x1080" selected=settings.quality==="1920x1080") 1920x1080
                             option(value="1640x1232" selected=settings.quality==="1640x1232") 1640x1232
-                            option(value="1280X720" selected=settings.quality==="1280X720") 1280X720
+                            option(value="1280x720" selected=settings.quality==="1280x720") 1280x720
                             option(value="640x480" selected=settings.quality==="640x480") 640x480
                     div(class='form-group')
                         label(for='rotation') Rotation
@@ -39,11 +39,11 @@ block content
                             option(value="cloud" selected=settings.whitebalance === "cloud") cloud
                     div(class='form-group')
                         label(for='loop') Loop timings
-                        select(class='form-control' id='loop' value=settings.loopTime name='loopTime')
-                            option(value='2 mins' selected=settings.loopTime === "2 mins") 2 mins
-                            option(value='3 mins' selected=settings.loopTime === "3 mins") 3 mins
-                            option(value='4 mins' selected=settings.loopTime === "4 mins") 4 mins
-                            option(value='5 mins' selected=settings.loopTime === "5 mins") 5 mins
+                        select(class='form-control' id='loop' value=settings.looptime name='looptime')
+                            option(value='2 mins' selected=settings.looptime === "2 mins") 2 mins
+                            option(value='3 mins' selected=settings.looptime === "3 mins") 3 mins
+                            option(value='4 mins' selected=settings.looptime === "4 mins") 4 mins
+                            option(value='5 mins' selected=settings.looptime === "5 mins") 5 mins
                     div(class='checkbox')
                         input(type='checkbox' checked=settings.stabilization id='stabilization' name='stabilization')
                         label &nbsp;Stabilization&nbsp;
