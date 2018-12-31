@@ -6,7 +6,9 @@ It uses redis to store config and running recording data. So it needs the redis 
 
 # How to run?
 > cd pi-dash-node
+
 > npm install
+
 > npm start
 
 Assuming the camera module attached to pi and enabled from raspi-config.
